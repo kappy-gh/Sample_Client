@@ -1,41 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HitObject : MonoBehaviour
 {
-    // スコア
-    private int score = 0;
+    // スコアの取得
+    public GameObject canvas;
+    private Scorer scorer;
 
-    // スコアを表示するテキスト
-    public Text scoreText;
-
-    // Start is called before the first frame update
     void Start()
     {
-        // スコアを表示するテキストの初期化
-        scoreText.text = scoreText.text = score.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // スコアの取得
+        scorer = canvas.GetComponent<Scorer>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-         Destroy(other.gameObject);
+        Destroy(other.gameObject);
 
         if(other.gameObject.tag == "Flower")
         {
-           score++;
+            scorer.AddScore();
         }
         else if(other.gameObject.tag == "Bard")
         {
-            score = 0;
+            scorer.ResetScore();
         }
-        scoreText.text = scoreText.text = score.ToString();
     }
 }
