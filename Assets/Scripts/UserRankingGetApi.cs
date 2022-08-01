@@ -22,6 +22,15 @@ public class UserRankingGetApi : MonoBehaviour
     }
 
     string requestURL = "http://localhost:8002/laravel/public/api/user/ranking/get";
+
+    // コンポーネントを読み込む
+    private Scorer scorer;
+
+    void Start()
+    {
+        // コンポーネントを読み込む
+        scorer = this.GetComponent<Scorer>();
+    }
     
     private IEnumerator GetData()
     {
@@ -39,12 +48,12 @@ public class UserRankingGetApi : MonoBehaviour
             }
             else
             {
-                var json = request.downloadHandler.text;
+                var json      = request.downloadHandler.text;
                 var rankLists = JsonUtility.FromJson<ResponseParams>(json);
 
-                List<int> ranks = new List<int>();
+                List<int> ranks         = new List<int>();
                 List<string> user_names = new List<string>();
-                List<int> scores = new List<int>(); 
+                List<int> scores        = new List<int>(); 
 
                 int num = 0;
                 foreach (var rankList in rankLists.responseParams)
@@ -54,7 +63,7 @@ public class UserRankingGetApi : MonoBehaviour
                     scores.Add(rankList.score);
                     num++;
                 }
-                this.GetComponent<Scorer>().MakeRanking(ranks, user_names, scores);
+                scorer.MakeRanking(ranks, user_names, scores);
             }
         }
     }

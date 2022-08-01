@@ -9,7 +9,7 @@ using UnityEngine.Networking;
 public class UserInfoGetApi : MonoBehaviour
 {
     [Serializable]
-    private sealed class PostParams
+    private class PostParams
     {
         public string uuid;
     }
@@ -29,16 +29,25 @@ public class UserInfoGetApi : MonoBehaviour
 
     string requestURL = "http://localhost:8002/laravel/public/api/user/info/get";
 
+    // コンポーネントを読み込む
+    private Scorer scorer;
+
+    void Start()
+    {
+        // コンポーネントを読み込む
+        scorer = this.GetComponent<Scorer>();
+    }
+
     private IEnumerator PostData(string uuid)
     {
-        var data = new PostParams();
+        var data  = new PostParams();
         data.uuid = uuid;
         var json     = JsonUtility.ToJson(data);
         var postData = Encoding.UTF8.GetBytes(json);
 
         using(var request = new UnityWebRequest(requestURL, UnityWebRequest.kHttpVerbPOST))
         {
-            request.uploadHandler = new UploadHandlerRaw(postData);
+            request.uploadHandler   = new UploadHandlerRaw(postData);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
@@ -57,9 +66,9 @@ public class UserInfoGetApi : MonoBehaviour
                 var userInfos = JsonUtility.FromJson<InfoParams>(jsonParam);
 
                 string user_name = userInfos.responseParams[0].user_name;
-                int high_score = userInfos.responseParams[0].high_score;
+                int high_score   = userInfos.responseParams[0].high_score;
 
-                this.GetComponent<Scorer>().MakeUser(uuid, user_name, high_score);
+                scorer.MakeUser(uuid, user_name, high_score);
             }
         }
     }

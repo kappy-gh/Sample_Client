@@ -18,18 +18,29 @@ public class UserRankingAddApi : MonoBehaviour
 
     string requestURL = "http://localhost:8002/laravel/public/api/user/ranking/add";
 
+    // コンポーネントを読み込む
+    private SaveManager saveManager;
+    private UserRankingGetApi userRankingGetApi;
+
+    void Start()
+    {
+        // コンポーネントを読み込む
+        saveManager = this.GetComponent<SaveManager>();
+        userRankingGetApi = this.GetComponent<UserRankingGetApi>();
+    }
+
     private IEnumerator PostData(string uuid, string user_name, int score)
     {
-        var data = new PostParams();
+        var data  = new PostParams();
         data.uuid = uuid;
         data.user_name = user_name;
-        data.score = score;
-        var json     = JsonUtility.ToJson(data);
-        var postData = Encoding.UTF8.GetBytes(json);
+        data.score     = score;
+        var json       = JsonUtility.ToJson(data);
+        var postData   = Encoding.UTF8.GetBytes(json);
 
         using(var request = new UnityWebRequest(requestURL, UnityWebRequest.kHttpVerbPOST))
         {
-            request.uploadHandler = new UploadHandlerRaw(postData);
+            request.uploadHandler   = new UploadHandlerRaw(postData);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
@@ -48,11 +59,11 @@ public class UserRankingAddApi : MonoBehaviour
                 if(uuid == null)
                 {
                     string new_uuid = request.downloadHandler.text;
-                    this.GetComponent<SaveManager>().Save(new_uuid);
+                    saveManager.Save(new_uuid);
                 }
 
                 // ランキング再表示
-                this.GetComponent<UserRankingGetApi>().Get();
+                userRankingGetApi.Get();
             }
         }
     }

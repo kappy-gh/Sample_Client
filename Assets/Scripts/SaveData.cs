@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+// 保存するユーザーデータ
 [Serializable]
 public class SaveData
 {

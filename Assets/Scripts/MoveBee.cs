@@ -9,15 +9,8 @@ public class MoveBee : MonoBehaviour
 
     // ボタン押しっぱなし判定
     private bool rightFlg = false;
-    private bool leftFlg = false;
+    private bool leftFlg  = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         // 蜂の移動

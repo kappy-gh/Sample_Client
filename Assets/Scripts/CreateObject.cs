@@ -16,13 +16,12 @@ public class CreateObject : MonoBehaviour
     Vector2 posObject;
 
     // 生成時間
-    private float nowTime = 0f;
+    private float nowTime  = 0f;
     private float interval = 1.3f;
 
     // オブジェクトを決める乱数
     private float numObject;
 
-    // Start is called before the first frame update
     void Start()
     {
         // ゲーム開始時最初のオブジェクトを生成
@@ -31,7 +30,6 @@ public class CreateObject : MonoBehaviour
         Object = Instantiate(_flower, posObject, Quaternion.identity);
     }
 
-    // Update is called once per frame
     void Update()
     {
         nowTime += Time.deltaTime;

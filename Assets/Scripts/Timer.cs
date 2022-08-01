@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 using System;
 
 public class Timer : MonoBehaviour
@@ -16,10 +15,18 @@ public class Timer : MonoBehaviour
     // ゲーム終了時判定
     private bool firstFlg = true;
 
+    // コンポーネントを読み込む
+    private SaveManager saveManager;
+    private UserRankingGetApi userRankingGetApi;
+
     void Start()
     {
         // 時間を表示するテキストの初期化
         timeText.text = timeText.text = nowTime.ToString("F0");
+
+        // コンポーネントを読み込む
+        saveManager = this.GetComponent<SaveManager>();
+        userRankingGetApi = this.GetComponent<UserRankingGetApi>();
     }
 
     void Update()
@@ -34,11 +41,11 @@ public class Timer : MonoBehaviour
             Time.timeScale = 0;
             if(firstFlg == true)
             {
-                // ユーザー情報を取得
-                this.GetComponent<SaveManager>().Load();
+                // ユーザー保存データを取得
+                saveManager.Load();
 
                 // ランキングデータ取得
-                this.GetComponent<UserRankingGetApi>().Get();
+                userRankingGetApi.Get();
 
                 firstFlg = false;
             }

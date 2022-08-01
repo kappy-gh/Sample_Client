@@ -33,11 +33,17 @@ public class Scorer : MonoBehaviour
     // 登録ボタン
     public GameObject enterButton;
 
+    // コンポーネントを読み込む
+    private UserRankingAddApi userRankingAddApi;
+
     void Start()
     {
         // スコアを表示するテキストの初期化
         scoreText.text = score.ToString();
         highScoreText.text = "0";
+
+        // コンポーネントを読み込む
+        userRankingAddApi = this.GetComponent<UserRankingAddApi>();
     }
 
     // スコア加算
@@ -54,11 +60,11 @@ public class Scorer : MonoBehaviour
         scoreText.text = score.ToString();
     }
 
-    //ランキング作成
+    // ランキング作成
     public void MakeRanking(List<int> ranks, List<string> user_names, List<int> scores)
     {
-        resultPanel.SetActive(true);
         nowScoreText.text = nowScoreText.text = score.ToString();
+        resultPanel.SetActive(true);
         titleButton.SetActive(true);
 
         // 行を生成
@@ -93,7 +99,7 @@ public class Scorer : MonoBehaviour
         enterButton.GetComponent<Button>().interactable = false;
 
         // ランキング登録
-        this.GetComponent<UserRankingAddApi>().Post(uuid, user_name, score);
+        userRankingAddApi.Post(uuid, user_name, score);
 
         highScoreText.text = score.ToString();
 
