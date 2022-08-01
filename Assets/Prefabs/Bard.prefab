@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4907772689240649662}
   - component: {fileID: -7624717118932286311}
   - component: {fileID: 548697490170394706}
+  - component: {fileID: 3165337741097796371}
   m_Layer: 0
   m_Name: Bard
   m_TagString: Bard
@@ -123,3 +124,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 2.9}
   m_EdgeRadius: 0
+--- !u!114 &3165337741097796371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7573593191068356759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91a746ad6e2be47cf8229e2cb9ea96e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
